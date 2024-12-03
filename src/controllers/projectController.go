@@ -11,11 +11,11 @@ func GetAllProjects(c *gin.Context) {
 	projects, err := models.GetAllProjects()
 
 	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, projects)
+	c.JSON(http.StatusOK, projects)
 }
 
 func GetProject(c *gin.Context) {
