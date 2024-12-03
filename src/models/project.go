@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
@@ -13,10 +12,13 @@ type Project struct {
 	UserId uuid.UUID `json:"user_id"`
 }
 
-func GetAllProjects() []Project {
+func GetAllProjects() ([]Project, error) {
 	var projects []Project
-	DB.Find(&projects)
-	return projects
+	result := DB.Find(&projects)
+	if result.Error != nil {
+		return projects, result.Error
+	}
+	return projects, nil
 }
 
 func GetProject(id uuid.UUID) (Project, error) {
@@ -24,13 +26,18 @@ func GetProject(id uuid.UUID) (Project, error) {
 	result := DB.First(&project, id)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
-			return project, errors.New("Record not found")
+			return project, errors.New("Project not found")
 		}
 		return project, result.Error
 	}
 	return project, nil
 }
 
-func CreateProject(project Project) {
-
+func CreateProject(project Project) (Project, error) {
+	newProject := project
+	result := DB.Create(&newProject)
+	if result.Error != nil {
+		return newProject, result.Error
+	}
+	return newProject, nil
 }

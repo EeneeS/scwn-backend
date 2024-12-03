@@ -13,7 +13,13 @@ var projects = []models.Project{
 }
 
 func GetAllProjects(c *gin.Context) {
-	projectsDB := models.GetAllProjects()
+	projectsDB, err := models.GetAllProjects()
+
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.IndentedJSON(http.StatusOK, projectsDB)
 }
 
@@ -45,6 +51,13 @@ func CreateProject(c *gin.Context) {
 	}
 
 	newProject.Id = uuid.New()
-	projects = append(projects, newProject)
-	c.JSON(http.StatusCreated, newProject)
+
+	newProjectDB, err := models.CreateProject(newProject)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+
+	c.JSON(http.StatusCreated, newProjectDB)
 }
