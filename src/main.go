@@ -16,6 +16,7 @@ func main() {
 	router.GET("/projects", controllers.GetAllProjects)
 	router.GET("/projects/:id", controllers.GetProject)
 	router.POST("/projects", controllers.CreateProject)
+	router.DELETE("/projects/:id", controllers.DeleteProject)
 	router.Run("localhost:3000")
 }
 

@@ -41,3 +41,11 @@ func CreateProject(project Project) (Project, error) {
 	}
 	return newProject, nil
 }
+
+func DeleteProject(id uuid.UUID) error {
+	result := DB.Delete(&Project{}, id)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}

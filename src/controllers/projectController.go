@@ -55,3 +55,22 @@ func CreateProject(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, createdProject)
 }
+
+// 204 no content should be returned
+func DeleteProject(c *gin.Context) {
+	id, err := uuid.Parse(c.Param("id"))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid UUID"})
+		return
+	}
+
+	DBerr := models.DeleteProject(id)
+
+	if DBerr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": DBerr.Error()})
+		return
+	}
+
+	c.Status(http.StatusNoContent)
+}
