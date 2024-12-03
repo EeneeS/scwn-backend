@@ -41,23 +41,22 @@ func GetProject(c *gin.Context) {
 	c.JSON(http.StatusOK, projectDB)
 }
 
-// FIX: watch out for race conditions when implementing db.
 func CreateProject(c *gin.Context) {
-	var newProject models.Project
+	var project models.Project
 
-	if err := c.BindJSON(&newProject); err != nil {
+	if err := c.BindJSON(&project); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	newProject.Id = uuid.New()
+	project.Id = uuid.New()
 
-	newProjectDB, err := models.CreateProject(newProject)
+	createdProject, err := models.CreateProject(project)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
 
-	c.JSON(http.StatusCreated, newProjectDB)
+	c.JSON(http.StatusCreated, createdProject)
 }
