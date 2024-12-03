@@ -23,13 +23,11 @@ func main() {
 	sqlPassword := os.Getenv("MYSQL_PASSWORD")
 	sqlDB := os.Getenv("MYSQL_DATABASE")
 
-	sqlConnection := fmt.Sprintf("%s:%s@tcp(localhost:3306)/%s", sqluser, sqlPassword, sqlDB)
+	sqlConnString := fmt.Sprintf("%s:%s@tcp(localhost:3306)/%s", sqluser, sqlPassword, sqlDB)
 
-	fmt.Println(sqlConnection)
-
-	db, err := sql.Open("mysql", sqlConnection)
+	db, err := sql.Open("mysql", sqlConnString)
 	if err != nil {
-		log.Fatal("Error opening database connection: ", err)
+		log.Fatal("Error: ", err)
 	}
 	defer db.Close()
 
