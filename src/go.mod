@@ -1,4 +1,4 @@
-module github.com/eenees/scwn-backend
+module github.com/eenees/scwn-backend/src
 
 go 1.23.3
 

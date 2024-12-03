@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/eenees/scwn-backend/controllers"
+	"github.com/eenees/scwn-backend/src/controllers"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

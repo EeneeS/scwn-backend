@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/eenees/scwn-backend/models"
+	"github.com/eenees/scwn-backend/src/models"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"net/http"
