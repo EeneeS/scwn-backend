@@ -18,22 +18,32 @@ func GetAllProjects(c *gin.Context) {
 }
 
 func GetProject(c *gin.Context) {
-	idString := c.Param("id")
-	id, err := uuid.Parse(idString)
+	id, err := uuid.Parse(c.Param("id"))
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid UUID"})
+		return
 	}
-	projectDB := models.GetProject(id)
+
+	projectDB, err := models.GetProject(id)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, projectDB)
 }
 
 // FIX: watch out for race conditions when implementing db.
 func CreateProject(c *gin.Context) {
 	var newProject models.Project
+
 	if err := c.BindJSON(&newProject); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	newProject.Id = uuid.New()
 	projects = append(projects, newProject)
 	c.JSON(http.StatusCreated, newProject)
