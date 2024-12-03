@@ -23,13 +23,8 @@ func GetProject(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid UUID"})
 	}
-	for _, project := range projects {
-		if project.Id == id {
-			c.JSON(http.StatusOK, project)
-			return
-		}
-	}
-	c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+	projectDB := models.GetProject(id)
+	c.JSON(http.StatusOK, projectDB)
 }
 
 // FIX: watch out for race conditions when implementing db.

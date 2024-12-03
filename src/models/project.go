@@ -16,8 +16,10 @@ func GetAllProjects() []Project {
 	return projects
 }
 
-func GetProject(id uuid.UUID) uuid.UUID {
-	return id
+func GetProject(id uuid.UUID) Project {
+	var project Project
+	DB.First(&project, id)
+	return project
 }
 
 func CreateProject(project Project) {
