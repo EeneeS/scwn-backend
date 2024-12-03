@@ -56,7 +56,6 @@ func CreateProject(c *gin.Context) {
 	c.JSON(http.StatusCreated, createdProject)
 }
 
-// 204 no content should be returned
 func DeleteProject(c *gin.Context) {
 	id, err := uuid.Parse(c.Param("id"))
 
