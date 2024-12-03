@@ -13,7 +13,8 @@ var projects = []models.Project{
 }
 
 func GetAllProjects(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, projects)
+	projectsDB := models.GetAllProjects()
+	c.IndentedJSON(http.StatusOK, projectsDB)
 }
 
 func GetProject(c *gin.Context) {
