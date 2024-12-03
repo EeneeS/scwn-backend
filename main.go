@@ -11,6 +11,7 @@ func main() {
 	router.GET("/", getAPIInfo)
 	router.GET("/projects", controllers.GetAllProjects)
 	router.GET("/projects/:id", controllers.GetProject)
+	router.POST("/projects", controllers.CreateProject)
 	router.Run("localhost:3000")
 }
 
