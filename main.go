@@ -1,14 +1,16 @@
 package main
 
 import (
-	"net/http"
-
+	"github.com/eenees/scwn-backend/controllers"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func main() {
 	router := gin.Default()
 	router.GET("/", getAPIInfo)
+	router.GET("/projects", controllers.GetAllProjects)
+	router.GET("/projects/:id", controllers.GetProject)
 	router.Run("localhost:3000")
 }
 
