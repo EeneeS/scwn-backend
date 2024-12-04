@@ -9,7 +9,7 @@ import (
 type Project struct {
 	Id     uuid.UUID `json:"id,omitempty"`
 	Name   string    `json:"name"`
-	UserId uuid.UUID `json:"user_id"`
+	UserId string    `json:"user_id"`
 }
 
 func GetAllProjects() ([]Project, error) {
