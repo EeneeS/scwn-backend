@@ -11,13 +11,18 @@ import (
 func UserRoutes(router *gin.Engine) {
 	router.GET("/", getAPIInfo)
 
-	router.GET("/projects", projectcontroller.GetAllProjects)
-	router.GET("/projects/:id", projectcontroller.GetProject)
-	router.POST("/projects", projectcontroller.CreateProject)
-	router.DELETE("/projects/:id", projectcontroller.DeleteProject)
+	projectRoutes := router.Group("/projects")
+	{
+		projectRoutes.GET("/", projectcontroller.GetAllProjects)
+		projectRoutes.GET("/:id", projectcontroller.GetProject)
+		projectRoutes.POST("/", projectcontroller.CreateProject)
+		projectRoutes.DELETE("/:id", projectcontroller.DeleteProject)
+	}
 
-	router.POST("/users", usercontroller.CreateUser)
-
+	userRoutes := router.Group("/users")
+	{
+		userRoutes.POST("/users", usercontroller.CreateUser)
+	}
 }
 
 func AuthRoutes(router *gin.Engine) {
