@@ -8,30 +8,30 @@ import (
 
 type User struct {
 	Id         string    `json:"id"`
-	Name       string    `json:"name"`
+	Email      string    `json:"email"`
 	Created_at time.Time `json:"created_at"`
 }
 
 func CreateUser(user User) (User, error) {
-	newUser, err := isValidUser(user)
+	validUser, err := isValidUser(user)
 	if err != nil {
-		return newUser, err
+		return user, err
 	}
-	result := DB.Create(&newUser)
-	if result.Error != nil {
-		return newUser, result.Error
+	if err := DB.Create(&validUser).Error; err != nil {
+		return validUser, err
 	}
-	return newUser, nil
+	return validUser, nil
 }
 
 func isValidUser(user User) (User, error) {
 	client, err := FB.Auth(context.Background())
 	if err != nil {
-		return user, fmt.Errorf("error getting Auth client: %v\n", err)
+		return user, fmt.Errorf("failed to get Auth client: %w", err)
 	}
-	_, userError := client.GetUser(context.Background(), user.Id)
-	if userError != nil {
-		return user, fmt.Errorf("error fetch user by UID: %v\n", userError)
+	firebaseUser, err := client.GetUser(context.Background(), user.Id)
+	if err != nil {
+		return user, fmt.Errorf("failed to fetch user by UID: %w", err)
 	}
+	user.Email = firebaseUser.Email
 	return user, nil
 }

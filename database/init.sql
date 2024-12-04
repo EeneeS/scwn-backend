@@ -1,6 +1,6 @@
 create table if not exists users (
   id char(36) PRIMARY KEY,
-  name varchar(255),
+  email varchar(255),
   created_at datetime
 );
 
