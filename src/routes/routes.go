@@ -21,7 +21,7 @@ func UserRoutes(router *gin.Engine) {
 
 	userRoutes := router.Group("/users")
 	{
-		userRoutes.POST("/users", usercontroller.CreateUser)
+		userRoutes.POST("/", usercontroller.CreateUser)
 	}
 }
 
