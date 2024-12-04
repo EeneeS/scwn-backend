@@ -11,6 +11,7 @@ func main() {
 	router := gin.Default()
 
 	models.ConnectDatabase()
+	models.ConnectFirebase()
 
 	router.GET("/", getAPIInfo)
 	router.GET("/projects", controllers.GetAllProjects)

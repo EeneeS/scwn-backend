@@ -1,6 +1,8 @@
 package models
 
 import (
+	"context"
+	firebase "firebase.google.com/go"
 	"fmt"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
@@ -10,6 +12,7 @@ import (
 )
 
 var DB *gorm.DB
+var FB *firebase.App
 
 func ConnectDatabase() {
 	err := godotenv.Load("../.env")
@@ -31,4 +34,14 @@ func ConnectDatabase() {
 	}
 
 	DB = db
+}
+
+func ConnectFirebase() {
+	fb, err := firebase.NewApp(context.Background(), nil)
+
+	if err != nil {
+		log.Fatalf("error initializing firebase: %v\n", err)
+	}
+
+	FB = fb
 }
