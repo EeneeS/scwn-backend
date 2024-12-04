@@ -52,17 +52,5 @@ func ConnectFirebase() {
 		log.Fatalf("error initializing firebase: %v\n", err)
 	}
 
-	// client, err := app.Auth(context.Background())
-	// if err != nil {
-	// 	log.Fatalf("error getting Auth client: %v\n", err)
-	// }
-	//
-	// user, err := client.GetUser(context.Background(), "yebcLJvxT3akhZeT98w3Gfu3qCp1")
-	// if err != nil {
-	// 	log.Fatalf("error fetching user by UID: %v\n", err)
-	// }
-	//
-	// fmt.Println(user)
-
 	FB = fb
 }
