@@ -13,11 +13,9 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 	createdUser, err := models.CreateUser(user)
-
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusCreated, createdUser)
 }
