@@ -1,23 +1,26 @@
 package main
 
 import (
-	"github.com/eenees/scwn-backend/src/controllers"
+	"net/http"
+
+	projectcontroller "github.com/eenees/scwn-backend/src/controllers/projectController"
 	"github.com/eenees/scwn-backend/src/models"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func main() {
 	router := gin.Default()
 
+	// TODO: dont put this in models...
+	models.LoadEnv()
 	models.ConnectDatabase()
 	models.ConnectFirebase()
 
 	router.GET("/", getAPIInfo)
-	router.GET("/projects", controllers.GetAllProjects)
-	router.GET("/projects/:id", controllers.GetProject)
-	router.POST("/projects", controllers.CreateProject)
-	router.DELETE("/projects/:id", controllers.DeleteProject)
+	router.GET("/projects", projectcontroller.GetAllProjects)
+	router.GET("/projects/:id", projectcontroller.GetProject)
+	router.POST("/projects", projectcontroller.CreateProject)
+	router.DELETE("/projects/:id", projectcontroller.DeleteProject)
 	router.Run("localhost:3000")
 }
 

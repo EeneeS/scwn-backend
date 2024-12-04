@@ -1,4 +1,4 @@
-package controllers
+package projectcontroller
 
 import (
 	"github.com/eenees/scwn-backend/src/models"
