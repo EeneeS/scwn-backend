@@ -12,7 +12,7 @@ func CreateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	createdUser, err := models.CreateUser(user)
+	createdUser, err := models.CreateUser(&user)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
