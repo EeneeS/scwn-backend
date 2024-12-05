@@ -45,6 +45,7 @@ func GetProjectByUser(user_id string) ([]Project, error) {
 	return projects, nil
 }
 
+// FIX: change to pointer parameter
 func CreateProject(project Project) (Project, error) {
 	newProject := project
 	result := config.DB.Create(&newProject)
