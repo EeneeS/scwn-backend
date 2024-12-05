@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"time"
+
+	"github.com/eenees/scwn-backend/src/config"
 )
 
 type User struct {
@@ -17,14 +19,14 @@ func CreateUser(user *User) (User, error) {
 	if err != nil {
 		return *user, err
 	}
-	if err := DB.Create(&validUser).Error; err != nil {
+	if err := config.DB.Create(&validUser).Error; err != nil {
 		return validUser, err
 	}
 	return validUser, nil
 }
 
 func isValidUser(user *User) (User, error) {
-	client, err := FB.Auth(context.Background())
+	client, err := config.FB.Auth(context.Background())
 	if err != nil {
 		return *user, fmt.Errorf("failed to get Auth client: %w", err)
 	}

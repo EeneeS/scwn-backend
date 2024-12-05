@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/eenees/scwn-backend/src/models"
+	"github.com/eenees/scwn-backend/src/config"
 	"github.com/eenees/scwn-backend/src/routes"
 	"github.com/gin-gonic/gin"
 )
@@ -9,10 +9,9 @@ import (
 func main() {
 	router := gin.Default()
 
-	// TODO: dont put this in models...
-	models.LoadEnv()
-	models.ConnectDatabase()
-	models.ConnectFirebase()
+	config.LoadEnv()
+	config.ConnectDatabase()
+	config.ConnectFirebase()
 
 	routes.UserRoutes(router)
 	routes.AuthRoutes(router)

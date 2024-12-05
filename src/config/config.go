@@ -1,4 +1,4 @@
-package models
+package config
 
 import (
 	"context"
@@ -54,3 +54,4 @@ func ConnectFirebase() {
 
 	FB = fb
 }
+

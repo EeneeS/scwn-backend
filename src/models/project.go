@@ -2,6 +2,9 @@ package models
 
 import (
 	"errors"
+	"fmt"
+
+	"github.com/eenees/scwn-backend/src/config"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
@@ -14,7 +17,7 @@ type Project struct {
 
 func GetAllProjects() ([]Project, error) {
 	var projects []Project
-	result := DB.Find(&projects)
+	result := config.DB.Find(&projects)
 	if result.Error != nil {
 		return projects, result.Error
 	}
@@ -23,10 +26,10 @@ func GetAllProjects() ([]Project, error) {
 
 func GetProject(id uuid.UUID) (Project, error) {
 	var project Project
-	result := DB.First(&project, id)
+	result := config.DB.First(&project, id)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
-			return project, errors.New("Project not found")
+			return project, errors.New("Project not found.")
 		}
 		return project, result.Error
 	}
@@ -35,7 +38,7 @@ func GetProject(id uuid.UUID) (Project, error) {
 
 func CreateProject(project Project) (Project, error) {
 	newProject := project
-	result := DB.Create(&newProject)
+	result := config.DB.Create(&newProject)
 	if result.Error != nil {
 		return newProject, result.Error
 	}
@@ -43,9 +46,15 @@ func CreateProject(project Project) (Project, error) {
 }
 
 func DeleteProject(id uuid.UUID) error {
-	result := DB.Delete(&Project{}, id)
+	if id == uuid.Nil {
+		return fmt.Errorf("Invalid project ID.")
+	}
+	result := config.DB.Delete(&Project{}, id)
 	if result.Error != nil {
 		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return fmt.Errorf("Project not found.")
 	}
 	return nil
 }
