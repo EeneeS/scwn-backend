@@ -54,11 +54,11 @@ func CreateProject(project Project) (Project, error) {
 	return newProject, nil
 }
 
-func DeleteProject(id uuid.UUID) error {
-	if id == uuid.Nil {
+func DeleteProject(userId string, projectId uuid.UUID) error {
+	if projectId == uuid.Nil {
 		return fmt.Errorf("Invalid project ID.")
 	}
-	result := config.DB.Delete(&Project{}, id)
+	result := config.DB.Where("user_id = ? and id = ?", userId, projectId).Delete(&Project{}, projectId)
 	if result.Error != nil {
 		return result.Error
 	}

@@ -22,9 +22,9 @@ func AuthRoutes(router *gin.Engine) {
 	projectRoutes.Use(middleware.AuthMiddleware())
 	{
 		projectRoutes.GET("/", projectcontroller.GetAllProjects)
-		projectRoutes.GET("/:id", projectcontroller.GetProject)
+		projectRoutes.GET("/:project_id", projectcontroller.GetProject)
 		projectRoutes.POST("/", projectcontroller.CreateProject)
-		projectRoutes.DELETE("/:id", projectcontroller.DeleteProject)
+		projectRoutes.DELETE("/:project_id", projectcontroller.DeleteProject)
 	}
 }
 

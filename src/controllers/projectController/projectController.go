@@ -1,18 +1,17 @@
 package projectcontroller
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/eenees/scwn-backend/src/models"
 	"github.com/eenees/scwn-backend/src/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"net/http"
 )
 
 func GetAllProjects(c *gin.Context) {
-	authToken, ok := utils.GetAuthToken(c)
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "could not retrieve token"})
-	}
+	authToken := utils.GetAuthToken(c)
 	projects, err := models.GetAllProjects(authToken.UID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -51,14 +50,16 @@ func CreateProject(c *gin.Context) {
 }
 
 func DeleteProject(c *gin.Context) {
-	id, err := uuid.Parse(c.Param("id"))
+	authToken := utils.GetAuthToken(c)
+	projectId, err := uuid.Parse(c.Param("project_id"))
+	fmt.Println(projectId)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid UUID"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid uuid"})
 		return
 	}
-	DBerr := models.DeleteProject(id)
-	if DBerr != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": DBerr.Error()})
+	err = models.DeleteProject(authToken.UID, projectId)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.Status(http.StatusNoContent)
