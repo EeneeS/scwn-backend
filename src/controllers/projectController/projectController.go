@@ -9,7 +9,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// check the role, then return everything i guess
 func GetAllProjects(c *gin.Context) {
 	token, exists := c.Get("token")
 	if !exists {
