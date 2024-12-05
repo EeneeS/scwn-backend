@@ -30,6 +30,15 @@ func GetProject(c *gin.Context) {
 	c.JSON(http.StatusOK, project)
 }
 
+func GetProjectByUser(c *gin.Context) {
+	user_id := c.Param("user_id")
+	projects, err := models.GetProjectByUser(user_id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+	}
+	c.JSON(http.StatusOK, projects)
+}
+
 func CreateProject(c *gin.Context) {
 	var project models.Project
 	if err := c.BindJSON(&project); err != nil {

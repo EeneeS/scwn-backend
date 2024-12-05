@@ -3,7 +3,6 @@ package models
 import (
 	"errors"
 	"fmt"
-
 	"github.com/eenees/scwn-backend/src/config"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -34,6 +33,15 @@ func GetProject(id uuid.UUID) (Project, error) {
 		return project, result.Error
 	}
 	return project, nil
+}
+
+func GetProjectByUser(user_id string) ([]Project, error) {
+	var projects []Project
+	result := config.DB.Where("user_id = ?", user_id).Find(&projects)
+	if result.Error != nil {
+		return projects, result.Error
+	}
+	return projects, nil
 }
 
 func CreateProject(project Project) (Project, error) {
