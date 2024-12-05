@@ -26,11 +26,7 @@ func CreateUser(user *User) (User, error) {
 }
 
 func isValidUser(user *User) (User, error) {
-	client, err := config.FB.Auth(context.Background())
-	if err != nil {
-		return *user, fmt.Errorf("failed to get Auth client: %w", err)
-	}
-	firebaseUser, err := client.GetUser(context.Background(), user.Id)
+	firebaseUser, err := config.AuthClient.GetUser(context.Background(), user.Id)
 	if err != nil {
 		return *user, fmt.Errorf("failed to fetch user by UID: %w", err)
 	}

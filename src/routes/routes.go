@@ -5,28 +5,27 @@ import (
 
 	projectcontroller "github.com/eenees/scwn-backend/src/controllers/projectController"
 	usercontroller "github.com/eenees/scwn-backend/src/controllers/userController"
+	"github.com/eenees/scwn-backend/src/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 func UserRoutes(router *gin.Engine) {
 	router.GET("/", getAPIInfo)
+}
 
+func AuthRoutes(router *gin.Engine) {
 	projectRoutes := router.Group("/projects")
+	projectRoutes.Use(middleware.AuthMiddleware())
 	{
 		projectRoutes.GET("/", projectcontroller.GetAllProjects)
 		projectRoutes.GET("/:id", projectcontroller.GetProject)
 		projectRoutes.POST("/", projectcontroller.CreateProject)
 		projectRoutes.DELETE("/:id", projectcontroller.DeleteProject)
 	}
-
 	userRoutes := router.Group("/users")
 	{
 		userRoutes.POST("/", usercontroller.CreateUser)
 	}
-}
-
-func AuthRoutes(router *gin.Engine) {
-	// todo auth here aka checking if user exists
 }
 
 func getAPIInfo(c *gin.Context) {

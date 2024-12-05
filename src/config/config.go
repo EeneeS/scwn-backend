@@ -3,6 +3,7 @@ package config
 import (
 	"context"
 	firebase "firebase.google.com/go"
+	"firebase.google.com/go/auth"
 	"fmt"
 	"github.com/joho/godotenv"
 	"google.golang.org/api/option"
@@ -13,7 +14,7 @@ import (
 )
 
 var DB *gorm.DB
-var FB *firebase.App
+var AuthClient *auth.Client
 
 func LoadEnv() {
 	err := godotenv.Load("../.env")
@@ -40,7 +41,6 @@ func ConnectDatabase() {
 }
 
 func ConnectFirebase() {
-
 	credentialsFile := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
 	if credentialsFile == "" {
 		log.Fatal("GOOGLE_APPLICATION_CREDENTIALS is not set")
@@ -52,6 +52,10 @@ func ConnectFirebase() {
 		log.Fatalf("error initializing firebase: %v\n", err)
 	}
 
-	FB = fb
-}
+	client, err := fb.Auth(context.Background())
+	if err != nil {
+		log.Fatalf("failed to get Auth client")
+	}
 
+	AuthClient = client
+}
