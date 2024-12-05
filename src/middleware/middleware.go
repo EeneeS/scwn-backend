@@ -27,6 +27,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		token, err := config.AuthClient.VerifyIDToken(context.Background(), tokenString)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
+			c.Abort()
 			return
 		}
 		fmt.Println(token)

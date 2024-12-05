@@ -18,12 +18,12 @@ func GetAllProjects(c *gin.Context) {
 }
 
 func GetProject(c *gin.Context) {
-	id, err := uuid.Parse(c.Param("id"))
+	projectId, err := uuid.Parse(c.Param("project_id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid UUID"})
 		return
 	}
-	project, err := models.GetProject(id)
+	project, err := models.GetProject(projectId)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
