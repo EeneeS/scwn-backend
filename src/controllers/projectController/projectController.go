@@ -1,15 +1,22 @@
 package projectcontroller
 
 import (
+	"net/http"
+
+	"firebase.google.com/go/auth"
 	"github.com/eenees/scwn-backend/src/models"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"net/http"
 )
 
 // check the role, then return everything i guess
 func GetAllProjects(c *gin.Context) {
-	projects, err := models.GetAllProjects()
+	token, exists := c.Get("token")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "could not retrieve token"})
+	}
+	authToken, _ := token.(*auth.Token)
+	projects, err := models.GetAllProjects(authToken.UID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -20,7 +27,7 @@ func GetAllProjects(c *gin.Context) {
 func GetProject(c *gin.Context) {
 	projectId, err := uuid.Parse(c.Param("project_id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid UUID"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid uuid"})
 		return
 	}
 	project, err := models.GetProject(projectId)

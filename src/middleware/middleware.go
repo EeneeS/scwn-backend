@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"context"
-	"fmt"
 	"github.com/eenees/scwn-backend/src/config"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -30,7 +29,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		fmt.Println(token)
+		c.Set("token", token)
 		c.Next()
 	}
 }

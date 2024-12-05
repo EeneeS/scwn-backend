@@ -14,9 +14,9 @@ type Project struct {
 	UserId string    `json:"user_id"`
 }
 
-func GetAllProjects() ([]Project, error) {
+func GetAllProjects(uid string) ([]Project, error) {
 	var projects []Project
-	result := config.DB.Find(&projects)
+	result := config.DB.Where("user_id = ?", uid).Find(&projects)
 	if result.Error != nil {
 		return projects, result.Error
 	}
