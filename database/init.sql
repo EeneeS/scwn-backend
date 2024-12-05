@@ -18,3 +18,13 @@ create table if not exists publishTargets (
   url varchar(255),
   foreign key (project_id) references projects(id)
 );
+
+create table if not exists changes (
+  id int auto_increment primary key,
+  project_id char(36),
+  element varchar(255),
+  type varchar(255),
+  original_value varchar(255),
+  new_value varchar(255),
+  foreign key (project_id) references projects(id)
+)

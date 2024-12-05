@@ -2,12 +2,11 @@ package projectcontroller
 
 import (
 	"fmt"
-	"net/http"
-
 	"github.com/eenees/scwn-backend/src/models"
 	"github.com/eenees/scwn-backend/src/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"net/http"
 )
 
 func GetAllProjects(c *gin.Context) {
