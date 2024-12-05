@@ -1,20 +1,18 @@
 package projectcontroller
 
 import (
-	"net/http"
-
-	"firebase.google.com/go/auth"
 	"github.com/eenees/scwn-backend/src/models"
+	"github.com/eenees/scwn-backend/src/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"net/http"
 )
 
 func GetAllProjects(c *gin.Context) {
-	token, exists := c.Get("token")
-	if !exists {
+	authToken, ok := utils.GetAuthToken(c)
+	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "could not retrieve token"})
 	}
-	authToken, _ := token.(*auth.Token)
 	projects, err := models.GetAllProjects(authToken.UID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
