@@ -6,6 +6,9 @@ import (
 	"net/http"
 )
 
+// TODO: this will probaly change depending on
+// what firebase returns to a user after
+// login in.
 func CreateUser(c *gin.Context) {
 	var user models.User
 	if err := c.BindJSON(&user); err != nil {
