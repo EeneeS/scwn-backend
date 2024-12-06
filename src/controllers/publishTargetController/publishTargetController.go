@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// TODO: check if the platform has already been added else dont create it
 func CreatePublishTarget(c *gin.Context) {
 	projectId, err := uuid.Parse(c.Param("project_id"))
 	if err != nil {
