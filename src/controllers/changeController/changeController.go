@@ -35,5 +35,6 @@ func CreateChange(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	// if available publish to publishTargets
 	c.JSON(http.StatusCreated, createdChanges)
 }
