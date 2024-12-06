@@ -13,12 +13,14 @@ type Project struct {
 	Name           string          `json:"name"`
 	UserId         string          `json:"user_id"`
 	PublishTargets []PublishTarget `json:"publish_targets"`
+	Changes        []Change        `json:"changes"`
 }
 
 func GetAllProjects(uid string) ([]Project, error) {
 	var projects []Project
 	result := config.DB.
 		Preload("PublishTargets").
+		Preload("Changes").
 		Where("user_id = ?", uid).
 		Find(&projects)
 	if result.Error != nil {
@@ -29,7 +31,10 @@ func GetAllProjects(uid string) ([]Project, error) {
 
 func GetProject(id uuid.UUID) (Project, error) {
 	var project Project
-	result := config.DB.First(&project, id)
+	result := config.DB.
+		Preload("PublishTargets").
+		Preload("Changes").
+		First(&project, id)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
 			return project, errors.New("Project not found.")

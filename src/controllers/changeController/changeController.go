@@ -1,11 +1,10 @@
 package changecontroller
 
 import (
-	"net/http"
-
 	"github.com/eenees/scwn-backend/src/models"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"net/http"
 )
 
 func CreateChange(c *gin.Context) {
@@ -28,7 +27,7 @@ func CreateChange(c *gin.Context) {
 			Element:       change.Element,
 			Type:          change.Type,
 			OriginalValue: change.OriginalValue,
-			NewValue:      change.OriginalValue,
+			NewValue:      change.NewValue,
 		})
 	}
 	createdChanges, err := models.CreateChange(&changes)

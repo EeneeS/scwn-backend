@@ -18,6 +18,7 @@ func GetAllProjects(c *gin.Context) {
 	c.JSON(http.StatusOK, projects)
 }
 
+// TODO: check if its the users project else return project not found
 func GetProject(c *gin.Context) {
 	projectId, err := uuid.Parse(c.Param("project_id"))
 	if err != nil {

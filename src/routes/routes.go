@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 
+	changecontroller "github.com/eenees/scwn-backend/src/controllers/changeController"
 	projectcontroller "github.com/eenees/scwn-backend/src/controllers/projectController"
 	publishtargetcontroller "github.com/eenees/scwn-backend/src/controllers/publishTargetController"
 	usercontroller "github.com/eenees/scwn-backend/src/controllers/userController"
@@ -23,6 +24,7 @@ func AuthRoutes(router *gin.Engine) {
 		projectRoutes.POST("/", projectcontroller.CreateProject)
 		projectRoutes.DELETE("/:project_id", projectcontroller.DeleteProject)
 		projectRoutes.POST("/:project_id/publish_targets", publishtargetcontroller.CreatePublishTarget)
+		projectRoutes.POST("/:project_id/changes", changecontroller.CreateChange)
 	}
 
 	userRoutes := router.Group("/users")

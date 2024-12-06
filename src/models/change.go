@@ -9,7 +9,7 @@ type Change struct {
 	ProjectId     uuid.UUID `json:"project_id"`
 	Element       string    `json:"element"`
 	Type          string    `json:"type"`
-	OriginalValue string    `json:"orignal_value"`
+	OriginalValue string    `json:"original_value"`
 	NewValue      string    `json:"new_value"`
 }
 
