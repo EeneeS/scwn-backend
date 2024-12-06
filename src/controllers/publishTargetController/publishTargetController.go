@@ -29,7 +29,7 @@ func CreatePublishTarget(c *gin.Context) {
 			Url:       target.Url,
 		})
 	}
-	createdPublishTargets, err := models.CreatePublishTarget(publishTargets)
+	createdPublishTargets, err := models.CreatePublishTarget(&publishTargets)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

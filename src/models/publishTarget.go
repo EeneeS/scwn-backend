@@ -11,11 +11,11 @@ type PublishTarget struct {
 	Url       string    `json:"url"`
 }
 
-func CreatePublishTarget(publishTargets []PublishTarget) ([]PublishTarget, error) {
+func CreatePublishTarget(publishTargets *[]PublishTarget) ([]PublishTarget, error) {
 	newPublishTargets := publishTargets
 	result := config.DB.Create(&newPublishTargets)
 	if result.Error != nil {
-		return newPublishTargets, result.Error
+		return *newPublishTargets, result.Error
 	}
-	return newPublishTargets, nil
+	return *newPublishTargets, nil
 }
