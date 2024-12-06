@@ -34,5 +34,5 @@ func CreatePublishTarget(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, createdPublishTargets)
+	c.JSON(http.StatusCreated, createdPublishTargets)
 }

@@ -13,14 +13,11 @@ type Change struct {
 	NewValue      string    `json:"new_value"`
 }
 
-type Changes struct {
-	Changes []Change `json:"changes"`
-}
-
-// TODO: left here
-func CreateChange(change *Change) (Change, error) {
-	if err := config.DB.Create(&change).Error; err != nil {
-		return *change, err
+func CreateChange(changes *[]Change) ([]Change, error) {
+	newChanges := changes
+	result := config.DB.Create(&newChanges)
+	if result.Error != nil {
+		return *newChanges, result.Error
 	}
-	return *change, nil
+	return *newChanges, nil
 }
