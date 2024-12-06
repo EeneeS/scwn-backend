@@ -1,14 +1,13 @@
 package routes
 
 import (
-	"net/http"
-
 	changecontroller "github.com/eenees/scwn-backend/src/controllers/changeController"
 	projectcontroller "github.com/eenees/scwn-backend/src/controllers/projectController"
 	publishtargetcontroller "github.com/eenees/scwn-backend/src/controllers/publishTargetController"
 	usercontroller "github.com/eenees/scwn-backend/src/controllers/userController"
 	"github.com/eenees/scwn-backend/src/middleware"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func UserRoutes(router *gin.Engine) {
