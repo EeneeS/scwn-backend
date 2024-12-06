@@ -36,16 +36,6 @@ func GetProject(id uuid.UUID) (Project, error) {
 	return project, nil
 }
 
-// FIX: dont use user_id.... user the jwt token from the firebase response
-func GetProjectByUser(user_id string) ([]Project, error) {
-	var projects []Project
-	result := config.DB.Where("user_id = ?", user_id).Find(&projects)
-	if result.Error != nil {
-		return projects, result.Error
-	}
-	return projects, nil
-}
-
 // FIX: change to pointer parameter
 func CreateProject(project Project) (Project, error) {
 	newProject := project
