@@ -36,14 +36,13 @@ func GetProject(id uuid.UUID) (Project, error) {
 	return project, nil
 }
 
-// FIX: change to pointer parameter
-func CreateProject(project Project) (Project, error) {
+func CreateProject(project *Project) (Project, error) {
 	newProject := project
 	result := config.DB.Create(&newProject)
 	if result.Error != nil {
-		return newProject, result.Error
+		return *newProject, result.Error
 	}
-	return newProject, nil
+	return *newProject, nil
 }
 
 func DeleteProject(userId string, projectId uuid.UUID) error {

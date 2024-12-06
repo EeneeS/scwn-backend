@@ -34,13 +34,15 @@ func GetProject(c *gin.Context) {
 }
 
 func CreateProject(c *gin.Context) {
+	authToken := utils.GetAuthToken(c)
 	var project models.Project
 	if err := c.BindJSON(&project); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	project.Id = uuid.New()
-	createdProject, err := models.CreateProject(project)
+	project.UserId = authToken.UID
+	createdProject, err := models.CreateProject(&project)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
