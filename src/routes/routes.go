@@ -11,10 +11,6 @@ import (
 
 func UserRoutes(router *gin.Engine) {
 	router.GET("/", getAPIInfo)
-	userRoutes := router.Group("/users")
-	{
-		userRoutes.POST("/", usercontroller.CreateUser)
-	}
 }
 
 func AuthRoutes(router *gin.Engine) {
@@ -25,6 +21,11 @@ func AuthRoutes(router *gin.Engine) {
 		projectRoutes.GET("/:project_id", projectcontroller.GetProject)
 		projectRoutes.POST("/", projectcontroller.CreateProject)
 		projectRoutes.DELETE("/:project_id", projectcontroller.DeleteProject)
+	}
+	userRoutes := router.Group("/users")
+	userRoutes.Use(middleware.AuthMiddleware())
+	{
+		userRoutes.POST("/", usercontroller.CreateUser)
 	}
 }
 

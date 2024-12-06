@@ -12,7 +12,7 @@ type Project struct {
 	Id             uuid.UUID       `json:"id,omitempty"`
 	Name           string          `json:"name"`
 	UserId         string          `json:"user_id"`
-	PublishTargets []PublishTarget `json:"publish_targets,omitempty"`
+	PublishTargets []PublishTarget `json:"publish_targets"`
 }
 
 func GetAllProjects(uid string) ([]Project, error) {

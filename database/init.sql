@@ -11,7 +11,7 @@ create table if not exists projects (
   foreign key (user_id) references users(id)
 );
 
-create table if not exists publishTargets (
+create table if not exists publish_targets (
   id int auto_increment primary key,
   project_id char(36),
   platform varchar(255),

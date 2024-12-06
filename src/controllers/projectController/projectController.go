@@ -1,7 +1,6 @@
 package projectcontroller
 
 import (
-	"fmt"
 	"github.com/eenees/scwn-backend/src/models"
 	"github.com/eenees/scwn-backend/src/utils"
 	"github.com/gin-gonic/gin"
@@ -35,13 +34,28 @@ func GetProject(c *gin.Context) {
 
 func CreateProject(c *gin.Context) {
 	authToken := utils.GetAuthToken(c)
-	var project models.Project
-	if err := c.BindJSON(&project); err != nil {
+	var req struct {
+		Name           string                 `json:"name"`
+		PublishTargets []models.PublishTarget `json:"publish_targets"`
+	}
+	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	project.Id = uuid.New()
-	project.UserId = authToken.UID
+	project := models.Project{
+		Id:     uuid.New(),
+		Name:   req.Name,
+		UserId: authToken.UID,
+	}
+	var publishTargets []models.PublishTarget
+	for _, target := range req.PublishTargets {
+		publishTargets = append(publishTargets, models.PublishTarget{
+			ProjectId: project.Id,
+			Platform:  target.Platform,
+			Url:       target.Url,
+		})
+	}
+	project.PublishTargets = publishTargets
 	createdProject, err := models.CreateProject(&project)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
@@ -53,7 +67,6 @@ func CreateProject(c *gin.Context) {
 func DeleteProject(c *gin.Context) {
 	authToken := utils.GetAuthToken(c)
 	projectId, err := uuid.Parse(c.Param("project_id"))
-	fmt.Println(projectId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid uuid"})
 		return
