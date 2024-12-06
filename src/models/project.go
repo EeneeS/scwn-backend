@@ -17,7 +17,10 @@ type Project struct {
 
 func GetAllProjects(uid string) ([]Project, error) {
 	var projects []Project
-	result := config.DB.Where("user_id = ?", uid).Find(&projects)
+	result := config.DB.
+		Preload("PublishTargets").
+		Where("user_id = ?", uid).
+		Find(&projects)
 	if result.Error != nil {
 		return projects, result.Error
 	}
