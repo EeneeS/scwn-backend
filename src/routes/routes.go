@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	projectcontroller "github.com/eenees/scwn-backend/src/controllers/projectController"
+	publishtargetcontroller "github.com/eenees/scwn-backend/src/controllers/publishTargetController"
 	usercontroller "github.com/eenees/scwn-backend/src/controllers/userController"
 	"github.com/eenees/scwn-backend/src/middleware"
 	"github.com/gin-gonic/gin"
@@ -21,7 +22,9 @@ func AuthRoutes(router *gin.Engine) {
 		projectRoutes.GET("/:project_id", projectcontroller.GetProject)
 		projectRoutes.POST("/", projectcontroller.CreateProject)
 		projectRoutes.DELETE("/:project_id", projectcontroller.DeleteProject)
+		projectRoutes.POST("/:project_id/publish_targets", publishtargetcontroller.CreatePublishTarget)
 	}
+
 	userRoutes := router.Group("/users")
 	userRoutes.Use(middleware.AuthMiddleware())
 	{

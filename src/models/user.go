@@ -16,7 +16,6 @@ type User struct {
 }
 
 func CreateUser(authToken *auth.Token, user *User) (User, error) {
-	fmt.Println(user)
 	validUser, err := isValidUser(authToken, user)
 	if err != nil {
 		return *user, err

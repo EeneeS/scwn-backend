@@ -68,7 +68,7 @@ func DeleteProject(c *gin.Context) {
 	authToken := utils.GetAuthToken(c)
 	projectId, err := uuid.Parse(c.Param("project_id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid uuid"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid uuid"})
 		return
 	}
 	err = models.DeleteProject(authToken.UID, projectId)
