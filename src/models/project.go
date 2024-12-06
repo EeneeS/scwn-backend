@@ -37,6 +37,9 @@ func GetProject(id uuid.UUID) (Project, error) {
 }
 
 func CreateProject(project *Project) (Project, error) {
+	if project.PublishTargets == nil {
+		project.PublishTargets = []PublishTarget{}
+	}
 	newProject := project
 	result := config.DB.Create(&newProject)
 	if result.Error != nil {
