@@ -26,5 +26,6 @@ create table if not exists changes (
   type varchar(255),
   original_value varchar(255),
   new_value varchar(255),
+  route varchar(255),
   foreign key (project_id) references projects(id)
 )
