@@ -11,6 +11,7 @@ type Change struct {
 	Type          string    `json:"type"`
 	OriginalValue string    `json:"original_value"`
 	NewValue      string    `json:"new_value"`
+	Route         string    `json:"route"`
 }
 
 func CreateChange(changes *[]Change) ([]Change, error) {

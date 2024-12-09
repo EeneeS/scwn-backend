@@ -28,6 +28,7 @@ func CreateChange(c *gin.Context) {
 			Type:          change.Type,
 			OriginalValue: change.OriginalValue,
 			NewValue:      change.NewValue,
+			Route:         change.Route,
 		})
 	}
 	createdChanges, err := models.CreateChange(&changes)

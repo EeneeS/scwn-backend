@@ -23,8 +23,9 @@ func AuthRoutes(router *gin.Engine) {
 		projectRoutes.POST("/", projectcontroller.CreateProject)
 		projectRoutes.DELETE("/:project_id", projectcontroller.DeleteProject)
 		projectRoutes.POST("/:project_id/publish_targets", publishtargetcontroller.CreatePublishTarget)
-		projectRoutes.POST("/:project_id/changes", changecontroller.CreateChange)
 	}
+
+	router.POST("projects/:project_id/changes", changecontroller.CreateChange)
 
 	userRoutes := router.Group("/users")
 	userRoutes.Use(middleware.AuthMiddleware())
@@ -36,6 +37,6 @@ func AuthRoutes(router *gin.Engine) {
 func getAPIInfo(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"appname": "scwn",
-		"version": "v1.0.0",
+		"version": "1.0.0",
 	})
 }
