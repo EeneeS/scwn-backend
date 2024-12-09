@@ -25,11 +25,13 @@ func LoadEnv() {
 }
 
 func ConnectDatabase() {
+	sqlURL := os.Getenv("MYSQL_URL")
+	sqlPORT := os.Getenv("MYSQL_PORT")
 	sqluser := os.Getenv("MYSQL_USER")
 	sqlPassword := os.Getenv("MYSQL_PASSWORD")
 	sqlDB := os.Getenv("MYSQL_DATABASE")
 
-	dsn := fmt.Sprintf("%s:%s@tcp(localhost:3306)/%s", sqluser, sqlPassword, sqlDB)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", sqluser, sqlPassword, sqlURL, sqlPORT, sqlDB)
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
