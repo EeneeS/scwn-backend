@@ -12,6 +12,7 @@ type Change struct {
 	OriginalValue string    `json:"original_value"`
 	NewValue      string    `json:"new_value"`
 	Route         string    `json:"route"`
+	BatchId       uuid.UUID `json:"batch_id"`
 }
 
 func CreateChange(changes *[]Change) ([]Change, error) {

@@ -20,6 +20,7 @@ func CreateChange(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	batchId := uuid.New()
 	var changes []models.Change
 	for _, change := range req.Changes {
 		changes = append(changes, models.Change{
@@ -29,6 +30,7 @@ func CreateChange(c *gin.Context) {
 			OriginalValue: change.OriginalValue,
 			NewValue:      change.NewValue,
 			Route:         change.Route,
+			BatchId:       batchId,
 		})
 	}
 	createdChanges, err := models.CreateChange(&changes)
@@ -37,5 +39,8 @@ func CreateChange(c *gin.Context) {
 		return
 	}
 	// if available publish to publishTargets
-	c.JSON(http.StatusCreated, createdChanges)
+	c.JSON(http.StatusCreated, gin.H{
+		"batch_id": batchId,
+		"changes":  createdChanges,
+	})
 }
