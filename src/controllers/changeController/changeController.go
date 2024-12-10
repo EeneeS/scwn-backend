@@ -44,3 +44,17 @@ func CreateChange(c *gin.Context) {
 		"changes":  createdChanges,
 	})
 }
+
+func GetAllChanges(c *gin.Context) {
+	projectId, err := uuid.Parse(c.Param("project_id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid uuid"})
+		return
+	}
+	changes, err := models.GetAllChanges(projectId)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, changes)
+}

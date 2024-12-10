@@ -15,6 +15,15 @@ type Change struct {
 	BatchId       uuid.UUID `json:"batch_id"`
 }
 
+func GetAllChanges(id uuid.UUID) ([]Change, error) {
+	var changes []Change
+	result := config.DB.Where("project_id = ?", id).Find(&changes)
+	if result.Error != nil {
+		return changes, result.Error
+	}
+	return changes, nil
+}
+
 func CreateChange(changes *[]Change) ([]Change, error) {
 	newChanges := changes
 	result := config.DB.Create(&newChanges)
