@@ -26,7 +26,7 @@ func AuthRoutes(router *gin.Engine) {
 	}
 
 	router.POST("projects/:project_id/changes", changecontroller.CreateChange)
-	router.GET("projects/:project_id/changes", changecontroller.GetAllChanges)
+	// router.GET("projects/:project_id/changes", changecontroller.GetAllChanges)
 
 	userRoutes := router.Group("/users")
 	userRoutes.Use(middleware.AuthMiddleware())
